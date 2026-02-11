@@ -60,7 +60,7 @@ Cambiar
 Enviá tu consulta
 </h2> <p class="text-gray-600 mb-6">
 Te responderemos a la brevedad
-</p> <form id="quotation-form" class="space-y-4" method="post" action="https://formspree.io/f/mwpdwkae" data-astro-cid-gbsi6xfa> <!-- Location / Provincia (hidden, ID de provincia) --> <input type="hidden" id="quote-location" name="location" required data-astro-cid-gbsi6xfa> <!-- Honeypot (anti-spam, debe estar vacío) --> <input type="text" name="website" id="website" value="" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px; width: 1px; height: 1px;" aria-hidden="true" data-astro-cid-gbsi6xfa> <!-- Source (tracking - hidden) --> <input type="hidden" name="source" value="cotizacion-page" data-astro-cid-gbsi6xfa> <!-- Nombre --> <div data-astro-cid-gbsi6xfa> <label for="quote-name" class="block text-sm font-semibold text-slate-700 mb-2" data-astro-cid-gbsi6xfa>
+</p> <form id="quotation-form" class="space-y-4" data-astro-cid-gbsi6xfa> <!-- Location / Provincia (hidden, ID de provincia) --> <input type="hidden" id="quote-location" name="location" required data-astro-cid-gbsi6xfa> <!-- Honeypot (anti-spam, debe estar vacío) --> <input type="text" name="website" id="website" value="" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px; width: 1px; height: 1px;" aria-hidden="true" data-astro-cid-gbsi6xfa> <!-- Source (tracking - hidden) --> <input type="hidden" name="source" value="cotizacion-page" data-astro-cid-gbsi6xfa> <!-- Nombre --> <div data-astro-cid-gbsi6xfa> <label for="quote-name" class="block text-sm font-semibold text-slate-700 mb-2" data-astro-cid-gbsi6xfa>
 Nombre *
 </label> <input type="text" id="quote-name" name="name" placeholder="Tu nombre completo" autocomplete="name" required maxlength="100" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-hormi-purple focus:outline-none transition-colors text-sm" data-astro-cid-gbsi6xfa> </div> <div class="grid gap-4 sm:grid-cols-2" data-astro-cid-gbsi6xfa> <!-- Email --> <div class="w-full" data-astro-cid-gbsi6xfa> <label for="quote-email" class="block text-sm font-semibold text-slate-700 mb-2" data-astro-cid-gbsi6xfa>
 Email *
@@ -76,102 +76,7 @@ Metros cúbicos
 Detalles del proyecto *
 </label> <textarea id="quote-message" name="message" rows="4" placeholder="Contanos sobre tu proyecto: ubicación, fecha..." required maxlength="2000" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-hormi-purple focus:outline-none transition-colors resize-none text-sm" data-astro-cid-gbsi6xfa></textarea> </div> <!-- Estado de envío --> <div id="form-status" class="hidden" data-astro-cid-gbsi6xfa></div> <!-- Botón Submit --> <button type="submit" id="submit-btn" class="w-full bg-hormi-yellow text-hormi-purple font-bold px-6 py-4 rounded-lg hover:bg-[#d4c000] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" data-astro-cid-gbsi6xfa> <span id="btn-text" data-astro-cid-gbsi6xfa>Enviar Cotización</span> <span id="btn-loading" class="hidden" data-astro-cid-gbsi6xfa>Enviando...</span> </button> <p class="text-xs text-gray-500 text-center" data-astro-cid-gbsi6xfa>
 * Campos obligatorios
-</p> </form>  <script type="module">
-  import { getSavedProvince } from '../utils/locationUtils';
-
-  function setStatus(el, type, message) {
-    if (!el) return;
-    if (type === 'success') {
-      el.className =
-        'bg-green-50 border-2 border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm font-medium';
-    } else {
-      el.className =
-        'bg-red-50 border-2 border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm font-medium';
-    }
-    el.textContent = message;
-    el.classList.remove('hidden');
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('quotation-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const btnText = document.getElementById('btn-text');
-    const btnLoading = document.getElementById('btn-loading');
-    const formStatus = document.getElementById('form-status');
-
-    if (!form || !(form instanceof HTMLFormElement)) return;
-
-    // Setear provincia en hidden input
-    const savedProvinceId = getSavedProvince(); // 'mendoza' | 'san-juan' | null
-    if (savedProvinceId) {
-      const locationInput = document.getElementById('quote-location');
-      if (locationInput && locationInput instanceof HTMLInputElement) {
-        locationInput.value = savedProvinceId;
-      }
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      // UX: loading
-      if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = true;
-      btnText?.classList.add('hidden');
-      btnLoading?.classList.remove('hidden');
-      formStatus?.classList.add('hidden');
-
-      try {
-        const formData = new FormData(form);
-
-        // Si el hidden de provincia estuviera vacío por algún motivo, lo intentamos setear igual
-        if (!formData.get('location') && savedProvinceId) {
-          formData.set('location', savedProvinceId);
-        }
-
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
-        });
-
-        const result = await response.json().catch(() => null);
-
-        if (response.ok) {
-          setStatus(formStatus, 'success', '¡Cotización enviada! Te contactaremos pronto.');
-          form.reset();
-
-          // Re-setear provincia después del reset (porque resetea hidden inputs)
-          if (savedProvinceId) {
-            const locationInput = document.getElementById('quote-location');
-            if (locationInput && locationInput instanceof HTMLInputElement) {
-              locationInput.value = savedProvinceId;
-            }
-          }
-
-          formStatus?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } else {
-          // Formspree suele devolver { errors: [{ message: "..." }, ...] }
-          const msg =
-            result?.errors?.[0]?.message ||
-            'Hubo un error al enviar. Por favor, intentá nuevamente.';
-          setStatus(formStatus, 'error', msg);
-        }
-      } catch (err) {
-        setStatus(
-          formStatus,
-          'error',
-          'No se pudo enviar en este momento. Revisá tu conexión e intentá nuevamente.'
-        );
-        console.error('Formspree submit error:', err);
-      } finally {
-        if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;
-        btnText?.classList.remove('hidden');
-        btnLoading?.classList.add('hidden');
-      }
-    });
-  });
-</script> </div> </div> <!-- Columna 2: (1/3 en desktop) --> <div class="lg:col-span-1"> <div class="p-6 md:p-8"> <h2 class="text-2xl md:text-3xl font-bold text-hormi-purple mb-2">
+</p> </form>  <script type="module" src="/_astro/QuotationForm.astro_astro_type_script_index_0_lang.D6pwRJsc.js"></script> </div> </div> <!-- Columna 2: (1/3 en desktop) --> <div class="lg:col-span-1"> <div class="p-6 md:p-8"> <h2 class="text-2xl md:text-3xl font-bold text-hormi-purple mb-2">
 Nuestras plantas
 </h2> <p class="text-gray-600 mb-6">
 Contactá directamente a la planta más cercana
