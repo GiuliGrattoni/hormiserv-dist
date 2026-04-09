@@ -1,5 +1,5 @@
-import{g as n,a,b as s}from"./locationUtils.CAdnG0xJ.js";import{g as i}from"./provinces.config.CWZx6S43.js";document.addEventListener("DOMContentLoaded",()=>{const r=n();if(!r){window.location.href="/#cotizacion-trigger";return}const t=i(r);if(!t){localStorage.removeItem("hormiserv_location"),window.location.href="/";return}const e=document.getElementById("province-name");e&&(e.textContent=t.label),l(t.plants);const o=document.getElementById("quote-province");o&&(o.value=t.label)});function l(r){const t=document.getElementById("plants-container");t&&(t.innerHTML=r.map(e=>{const o=a(e.whatsapp,s(e.name));return`
-        <div class="border-l-2 border-l-purple-200 p-4  hover:bg-black/2 rounded-r-xl transition-colors">
+import{g as s,a as l,b as i}from"./locationUtils.CAdnG0xJ.js";import{g as c}from"./provinces.config.CWZx6S43.js";document.addEventListener("DOMContentLoaded",()=>{const o=s();if(!o){window.location.href="/#cotizacion-trigger";return}const r=c(o);if(!r){localStorage.removeItem("hormiserv_location"),window.location.href="/";return}const a=document.getElementById("province-name");a&&(a.textContent=r.label),d(r.plants);const e=document.getElementById("quote-province");e&&(e.value=r.label)});function d(o){const r=document.getElementById("plants-container");if(!r)return;r.innerHTML=o.map((e,t)=>{const n=l(e.whatsapp,i(e.name));return`
+        <div class="reveal ${t===0?"":t===1?"reveal-delay-1":t===2?"reveal-delay-2":"reveal-delay-3"} border-l-2 border-l-purple-200 p-4  hover:bg-black/2 rounded-r-xl transition-colors">
           <div class="flex items-center justify-between gap-4">
             <div class="flex-1">
               <h3 class="font-bold text-hormi-purple mb-1">${e.name}</h3>
@@ -7,7 +7,7 @@ import{g as n,a,b as s}from"./locationUtils.CAdnG0xJ.js";import{g as i}from"./pr
               ${e.hours?`<p class="text-xs text-gray-500">${e.hours}</p>`:""}
             </div>
             <a
-              href="${o}"
+              href="${n}"
               target="_blank"
               rel="noopener noreferrer"
               class="flex-shrink-0 bg-hormi-whatsapp text-white hover:scale-105 font-semibold p-4 rounded-full transition-all duration-300 inline-flex items-center gap-2  shadow-md hover:shadow-xl"
@@ -18,4 +18,4 @@ import{g as n,a,b as s}from"./locationUtils.CAdnG0xJ.js";import{g as i}from"./pr
             </a>
           </div>
         </div>
-      `}).join(""))}
+      `}).join("");const a=new IntersectionObserver(e=>{e.forEach(t=>{t.isIntersecting&&(t.target.classList.add("visible"),a.unobserve(t.target))})},{threshold:.12,rootMargin:"0px 0px -40px 0px"});r.querySelectorAll(".reveal").forEach(e=>a.observe(e))}
