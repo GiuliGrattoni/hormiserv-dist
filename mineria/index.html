@@ -143,7 +143,7 @@ Enviar por WhatsApp
 Se abrió WhatsApp con tu consulta. El vendedor te responderá a la brevedad.
 </p> <button type="button" id="qclose-4" class="bg-hormi-purple text-white font-bold px-6 py-3 rounded-xl hover:bg-hormi-purple-hover transition-colors cursor-pointer" data-astro-cid-ljgbophg>
 Cerrar
-</button> </div> </div> </div> </div> <script type="module" src="/_astro/QuotationModal.astro_astro_type_script_index_0_lang.CRDTOd1Z.js"></script>  <script>
+</button> </div> </div> </div> </div> <script type="module" src="/_astro/QuotationModal.astro_astro_type_script_index_0_lang.C-aCg8o3.js"></script>  <script>
   // ── Reveal on scroll ────────────────────────────────────────────
   (function () {
     var observer = new IntersectionObserver(
@@ -170,6 +170,11 @@ Cerrar
       window.gtag("event", "conversion", {
         send_to: "AW-17718932053/0E-dCIWgl88bENXkhYFC",
       });
+      window.gtag("event", "whatsapp_click", {
+        event_category: "contacto_directo",
+        province: link.dataset.analyticsProvince || undefined,
+        plant_name: link.dataset.analyticsPlant || undefined,
+      });
     }
   });
-</script> </body> </html> <script type="module">document.addEventListener("click",t=>{const e=t.target?.closest?.("[data-analytics-event]");if(!e||typeof window.gtag!="function")return;const a=e.dataset.analyticsEvent;a==="expo_cta_click"&&window.gtag("event","expo_cta_click",{event_category:"expo_minera",cta_label:e.dataset.analyticsCta}),a==="whatsapp_click"&&window.gtag("event","whatsapp_click",{event_category:"mineria_contacto",province:e.dataset.analyticsProvince})});const n=document.querySelectorAll(".reveal"),c=new IntersectionObserver(t=>{t.forEach(e=>{e.isIntersecting&&(e.target.classList.add("visible"),c.unobserve(e.target))})},{threshold:.12,rootMargin:"0px 0px -40px 0px"});n.forEach(t=>c.observe(t));</script>
+</script> </body> </html> <script type="module">document.addEventListener("click",t=>{const e=t.target?.closest?.("[data-analytics-event]");!e||typeof window.gtag!="function"||e.dataset.analyticsEvent==="expo_cta_click"&&window.gtag("event","expo_cta_click",{event_category:"expo_minera",cta_label:e.dataset.analyticsCta})});const c=document.querySelectorAll(".reveal"),a=new IntersectionObserver(t=>{t.forEach(e=>{e.isIntersecting&&(e.target.classList.add("visible"),a.unobserve(e.target))})},{threshold:.12,rootMargin:"0px 0px -40px 0px"});c.forEach(t=>a.observe(t));</script>
