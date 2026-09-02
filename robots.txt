@@ -1,0 +1,33 @@
+# Hormiserv — https://www.hormiserv.com
+
+# ── Motores de respuesta y agentes de IA ──────────────────────────────
+# OpenAI: GPTBot entrena/rastrea, OAI-SearchBot indexa para ChatGPT Search,
+# ChatGPT-User es la visita en vivo cuando alguien pregunta por el sitio.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+# Anthropic: ClaudeBot rastrea, Claude-SearchBot indexa, Claude-User navega.
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+# Perplexity: el crawler y la visita en vivo.
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+# Google-Extended no rastrea nada: sólo autoriza a Gemini y a AI Overviews a
+# usar lo que Googlebot ya rastreó. Applebot-Extended es su equivalente.
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
+# Meta AI.
+User-agent: meta-externalagent
+Allow: /
+Disallow: /gestion/
+Disallow: /api/
+
+# ── Todos los demás (Googlebot, Bingbot, etc.) ────────────────────────
+User-agent: *
+Allow: /
+Disallow: /gestion/
+Disallow: /api/
+
+Sitemap: https://www.hormiserv.com/sitemap-index.xml
